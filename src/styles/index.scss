@@ -1,7 +1,36 @@
-@font-face {
-  font-family: 'Inter';
-  src: url('../fonts/Inter.ttf');
+.ClassNumberOfBlock {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}
+.ClassTypeOfRegime {
+  position: absolute;
+  top: 40px;
+  left: 15px;
+}
+.ClassAirTemperature {
+  position: absolute;
+  top: 70px;
+  left: 15px;
+}
+.ClassCelsi {
+  position: absolute;
+  top: 70px;
+  left: 200px;
+}
+.ClassAirPressure {
+  position: absolute;
+  top: 100px;
+  left: 15px;
+}
+.ClasskPa {
+  position: absolute;
+  top: 100px;
+  left: 200px;
+}
+.calc {
+  position: absolute;
+  top: 140px;
+  left: 15px;
 }
 
-@import 'variables';
-@import 'scaffolding';

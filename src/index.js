@@ -1,26 +1,68 @@
-// Test import of a JavaScript module
-import { example } from '@/js/example'
+import 'styles/index.scss'
 
-// Test import of an asset
-import webpackLogo from '@/images/webpack-logo.svg'
+function callCalc() {
+    function addNumberOfBlock() {
+        return Number(document.getElementById("IdNumberOfBlock").value);
+    }
 
-// Test import of styles
-import '@/styles/index.scss'
+    function addRegimeOfBlock() {
+        return Number(document.getElementById("IdTypeOfRegime").value);
+    }
 
-// Appending to the DOM
-const logo = document.createElement('img')
-logo.src = webpackLogo
+    function addAirTemperature() {
+        return Number(document.getElementById("IdAirTemperature").value);
+    }
 
-const heading = document.createElement('h1')
-heading.textContent = example()
+    function addAirPressure() {
+        return Number(document.getElementById("IdAirPressure").value);
+    }
 
-// Test a background image url in CSS
-const imageBackground = document.createElement('div')
-imageBackground.classList.add('image')
+    let polynom = {
+        a: [303.98, 286.3, 287.86],
+        b: [0.135, 0.0666, 0.188],
+        c: [2.248, 2.116, 2.0799],
+        d: [0.741, 0.561, 0.795],
+        OptimalPositionOfVNAinNPRCh: [88, 90, 90, 0, 0, 0],
+        OptimalPositionOfVNAinOPRCh: [0, 0, 0, 80, 80, 80],
+    };
+    let NumberOfBlock = addNumberOfBlock();
+    let RegimeOfBlock = addRegimeOfBlock();
+    let AirTemperature = addAirTemperature();
+    let AirPressure = addAirPressure();
+    let maxHeat = 20;
 
-// Test a public folder asset
-const imagePublic = document.createElement('img')
-imagePublic.src = '/assets/example.png'
+    function findPrimaryOptimalTemperature() {
+        return (-(polynom.a[NumberOfBlock - 1] - polynom.OptimalPositionOfVNAinNPRCh[(NumberOfBlock + RegimeOfBlock - 1)] - polynom.OptimalPositionOfVNAinOPRCh[(NumberOfBlock + RegimeOfBlock - 1)] - polynom.b[NumberOfBlock - 1] * AirTemperature - polynom.c[NumberOfBlock - 1] * AirPressure) / polynom.d[NumberOfBlock - 1]);
+    }
 
-const app = document.querySelector('#root')
-app.append(logo, heading, imageBackground, imagePublic)
+    function findSecondaryOptimalTemperature() {
+        let FirstOptimalTemperature = findPrimaryOptimalTemperature();
+        let deltaTemp = FirstOptimalTemperature - AirTemperature;
+        if (AirTemperature >= 8) {
+            return "Нагрев воздуха не требуется";
+        }
+        if (AirTemperature > FirstOptimalTemperature) {
+            return "Нагрев воздуха не требуется";
+        }
+        if ((AirTemperature < 8) & (FirstOptimalTemperature >= 8) & (deltaTemp <= maxHeat)) {
+            return "Оптимальная температура нагрева воздуха на ЭБ№" + NumberOfBlock + " 8" + " °С";
+        }
+        if ((AirTemperature < 8) & (FirstOptimalTemperature < 8) & (deltaTemp <= maxHeat)) {
+            return "Оптимальная температура нагрева воздуха на ЭБ№" + NumberOfBlock + " " + Math.round(FirstOptimalTemperature) + " °С";
+        }
+        if ((AirTemperature < 8) & (FirstOptimalTemperature < 8) & (deltaTemp > maxHeat)) {
+            return "Оптимальная температура нагрева воздуха на ЭБ№" + NumberOfBlock + " " + (AirTemperature + maxHeat) + " °С";
+        }
+        if ((AirTemperature < 8) & (FirstOptimalTemperature >= 8) & (deltaTemp > 20) & ((AirTemperature + maxHeat) >= 8)) {
+            return "Оптимальная температура нагрева воздуха ЭБ№" + NumberOfBlock + " " + "8" + " °С";
+        }
+        if ((AirTemperature < 8) & (FirstOptimalTemperature >= 8) & (deltaTemp > 20) & ((AirTemperature + maxHeat) < 8)) {
+            return "Оптимальная температура нагрева воздуха ЭБ№" + NumberOfBlock + " " + (AirTemperature + maxHeat) + " °С";
+        }
+    }
+
+    alert(findSecondaryOptimalTemperature());
+}
+
+const calc = document.querySelector(".calc");
+calc.addEventListener("click", callCalc);

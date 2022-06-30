@@ -5,10 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>Расчет оптимальной температуры нагрева воздуха после КВОУ ЭБ НГРЭС</title>
   </head>
 
   <body>
-    <div id="root"></div>
+  <img src="https://firecenter.ru/upload/pictures/nyganskay_gres_2.jpg">
+  <select class="ClassNumberOfBlock" id="IdNumberOfBlock">
+    <option value="">Выберите номер энергоблока>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+  <select class="ClassTypeOfRegime" id="IdTypeOfRegime">
+    <option value="">Выберите режим работы блока>
+    <option value="0">НПРЧ</option>
+    <option value="3">ОПРЧ</option>
+  </select>
+  <input class="ClassAirTemperature" id="IdAirTemperature"><div class="ClassCelsi" id="Celsi">Температура атмосферного воздуха, °С</div>
+  <input class="ClassAirPressure" id="IdAirPressure"><div class="ClasskPa" id="kPa">Давление атмосферного воздуха, кПа</div>
+  <button class="calc" id="button">Рассчитать оптимальную температуру нагрева воздуха за КВОУ</button>
   </body>
 </html>
