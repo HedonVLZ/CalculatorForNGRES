@@ -1,4 +1,3 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -17,9 +16,6 @@ module.exports = {
 
   // Customize the webpack build process
   plugins: [
-    // Removes/cleans build folders and unused assets when rebuilding
-    new CleanWebpackPlugin(),
-
     // Copies files from target to destination folder
     new CopyWebpackPlugin({
       patterns: [
